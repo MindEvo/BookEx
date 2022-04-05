@@ -16,8 +16,18 @@ About Us
 {% endblock sidenav %}
 
 {% block content %}
-<h1 align="center"> About Us </h1>
+<div class="container">
+    <div class="card" style="width: 100%">
+        <div class="card-body">
+            <h1 class="card-title"> About Us </h1>
+            <hr>
+            <p class="card-text">We here at BookEx ... (Fill in description here) </p>
+        </div>
+    </div>
+</div>
+<br>
 <div class="row justify-content-center">
+    <h3 align="center"> Meet the Team </h3>
     <div class="card" style="width: 18rem;">
         <img src="{% static 'megaman.jpg' %}" class="card-img-top" alt="...">
         <div class="card-body">

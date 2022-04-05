@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Display Books
+Book Detail
 {% endblock title%}
 
 {% block sidenav %}
@@ -15,19 +15,32 @@ Display Books
 {% endblock sidenav %}
 
 {% block content %}
-<h1 align="center"> Display Books </h1>
+<h1 align="center"> Book Detail </h1>
 
 <table align="center" border="2" width="400">
-    {% for book in books %}
         <tr>
             <td>
-                <a href="book_detail/{{book.id}}">{{book.name}}</a>
+                {{book.name}}
+            </td>
+            <td>
+                <img src="{% static book.pic_path  %}" width="100" height="100"/>
             </td>
             <td>
                 {{ book.price }}
             </td>
+            <td>
+                {{ book.username }}
+            </td>
         </tr>
-    {% endfor %}
+        <tr>
+          <td>
+            {{book.web}}
+          </td>
+          <td>
+            {{book.publishdate}}
+          </td>
+        </tr>
+
 </table>
 
 {% endblock content %}

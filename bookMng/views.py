@@ -73,3 +73,34 @@ class Register(CreateView):
     def form_valid(self, form):
         form.save()
         return HttpResponseRedirect(self.success_url)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def book_detail(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.pic_path = book.picture.url[14:]
+
+    return render(request,
+                    "bookMng/book_detail.html",
+                    {
+                        'item_list': MainMenu.objects.all(),
+                        'book': book
+                    }
+                    )
+
+
+@login_required(login_url=reverse_lazy('login'))
+def mybooks(request):
+    books = Book.objects.all()
+    for b in books:
+        b.pic_path = b.picture.url[14:]
+
+    return render(request,
+                    "bookMng/displaybooks.html",
+                    {
+                        'item_list': MainMenu.objects.all(),
+                        'books': books
+                    }
+                    )
+
+

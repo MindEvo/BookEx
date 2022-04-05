@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+About Us
+{% endblock title%}
+
+{% block sidenav %}
+    {% for item in item_list %}
+        <li>
+            <a href="{{ item.link }}">{{ item.item }}</a>
+        </li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+<h1 align="center"> About Us </h1>
+<div align="center">
+    <p>We are GOAT!</p>
+    <table align="center" border="2" width="600">
+        <tr><td>Name</td><td>Bio</td></tr>
+        <tr>
+            <td>Richard Bailon</td>
+            <td>
+                <p>
+                    A special purple dragon only born every 10 generations.
+                    He is headstrong and rather reckless when it comes down to helping others.
+                    The prophecies state that he will guide the fate of his era.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>Thomas Benson</td>
+            <td>Goat</td>
+        </tr>
+        <tr>
+            <td>Martin Castorena</td>
+            <td>
+                <p>
+                    Also known as King Koopa, is the overall main antagonist of the Super Mario series, and is the king of the Mushroom Kingdom's badlands. Grew up on Yoshi's Island, raised by Kamek, a Magikoopa who would soon become his royal adviser                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>Joshua Chavez</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Robert Cueto</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Helen Dam</td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}

@@ -104,3 +104,10 @@ def mybooks(request):
                     )
 
 
+def aboutus(request):
+    return render(request,
+                  "bookMng/aboutus.html",
+                  {
+                      'item_list': MainMenu.objects.all()
+                  }
+                  )

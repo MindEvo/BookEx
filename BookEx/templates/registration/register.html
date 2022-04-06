@@ -7,28 +7,28 @@
 {% endblock title%}
 
 {% block sidenav %}
-    <li>
-        <a href="/">Home</a>
-    </li>
+<li>
+    <a href="/">Home</a>
+</li>
 {% endblock sidenav %}
 
 
 {% block content %}
-    <h1 align="center">User Registration</h1>
+<h1 align="center">User Registration</h1>
+<form action="" method="post">
 
-    <form action="" method="post">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>
-                    <input type="submit" value="Submit">
-                </td>
-            </tr>
-        </table>
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td>
+                <input type="submit" value="Submit">
+            </td>
+        </tr>
+    </table>
 
-        <input type="hidden" name="next" value="{{ next }}" />
-        {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    {% csrf_token %}
 
-    </form>
+</form>
 
 {% endblock content %}

@@ -41,13 +41,13 @@ def postbook(request):
         if 'submitted' in request.GET:
             submitted = True
         return render(request,
-                  "bookMng/postbook.html",
-                  {
-                      'form': form,
-                      'item_list': MainMenu.objects.all(),
-                      'submitted': submitted,
-                  }
-                  )
+                      "bookMng/postbook.html",
+                      {
+                          'form': form,
+                          'item_list': MainMenu.objects.all(),
+                          'submitted': submitted,
+                      }
+                      )
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -57,18 +57,18 @@ def displaybooks(request):
         b.pic_path = b.picture.url[14:]
 
     return render(request,
-                    "bookMng/displaybooks.html",
-                    {
+                  "bookMng/displaybooks.html",
+                  {
                         'item_list': MainMenu.objects.all(),
                         'books': books
-                    }
-                    )
+                  }
+                  )
 
 
 @login_required(login_url=reverse_lazy('login'))
-def searchresults(request, bookname):
-    books = Book.objects.get(name__iexact=bookname)
-
+def searchresults(request):
+    books = Book.objects.filter(name__icontains=request.POST.get('search'))
+    print(books)
     return render(request,
                   "bookMng/searchresults.html",
                   {

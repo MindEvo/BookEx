@@ -53,9 +53,10 @@
             </ul>
         </div>
 
-        <form class="d-flex" action="" method="post">
-            <input class="form-control me-2" type="text" placeholder="Book Name">
-            <button class="btn btn-primary" type="button">Search</button>
+        <form class="d-flex" action="{% url 'searchresults' %}" method="post">
+            <input class="form-control me-2" type="text" name="search" placeholder="Book Name">
+            <button class="btn btn-primary" type="submit" value="submit">Search</button>
+            {% csrf_token %}
         </form>
 
         <div>

@@ -65,6 +65,19 @@ def displaybooks(request):
                     )
 
 
+@login_required(login_url=reverse_lazy('login'))
+def searchresults(request, bookname):
+    books = Book.objects.get(name__iexact=bookname)
+
+    return render(request,
+                  "bookMng/searchresults.html",
+                  {
+                      'item_list': MainMenu.objects.all(),
+                      'books': books
+                  }
+                  )
+
+
 class Register(CreateView):
     template_name = 'registration/register.html'
     form_class = UserCreationForm

@@ -68,7 +68,7 @@ def displaybooks(request):
 @login_required(login_url=reverse_lazy('login'))
 def searchresults(request):
     books = Book.objects.filter(name__icontains=request.POST.get('search'))
-    print(books)
+
     return render(request,
                   "bookMng/searchresults.html",
                   {

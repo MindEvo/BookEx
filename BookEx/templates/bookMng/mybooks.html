@@ -1,24 +1,12 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-{% block title %}
-My Books
-{% endblock title%}
-
-{% block sidenav %}
-    {% for item in item_list %}
-        <li>
-            <a href="{{ item.link }}">{{ item.item }}</a>
-        </li>
-    {% endfor %}
-{% endblock sidenav %}
+{% block title %} My Books {% endblock title%}
 
 {% block content %}
 <h1 align="center"> My Books </h1>
-
 <div class="container">
     <table class="table w-50 table-bordered" align="center" border="2" width="200">
+
         <thead>
             <tr>
                 <th scope="col"></th>
@@ -27,6 +15,7 @@ My Books
                 <th scope="col"></th>
             </tr>
         </thead>
+
         <tbody>
             {% for book in books %}
                 <tr>
@@ -45,8 +34,7 @@ My Books
                 </tr>
             {% endfor %}
         </tbody>
+
     </table>
-
 </div>
-
 {% endblock content %}

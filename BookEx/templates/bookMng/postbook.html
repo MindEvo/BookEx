@@ -1,27 +1,14 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-
-{% block title %}
-Post Book
-{% endblock title%}
-
-{% block sidenav %}
-    {% for item in item_list %}
-        <li>
-            <a href="{{ item.link }}">{{ item.item }}</a>
-        </li>
-    {% endfor %}
-{% endblock sidenav %}
-
+{% block title %} Post Book {% endblock title%}
 
 {% block content %}
 <h1 align="center"> Post a Book Page </h1>
 
 {% if submitted %}
-<p> Post Book Successfully </p>
+    <p> Post Book Successfully </p>
 {% else %}
+
 <form action="" enctype="multipart/form-data" method="post" novalidate>
     <table>
         {{ form.as_table }}
@@ -34,4 +21,5 @@ Post Book
     {% csrf_token %}
 </form>
 {% endif %}
+
 {% endblock content %}

@@ -1,34 +1,20 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-{% block title %}
-Search Results
-{% endblock title%}
-
+{% block title %} Search Results {% endblock title%}
 
 {% block content %}
 <h1 align="center"> Search Results </h1>
-
 <div class="container">
-
     <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
-
         {% for book in books %}
         <div class="card" style="width: 16rem;" >
-
-            <img src="{% static book.pic_path %}" class="card-img-top" width="100px" height="100px"/>
-
+            <img src="{% static book.pic_path %}" class="card-img-top"/>
             <div class="card-body">
                 <h5 class="card-title"><a href="book_detail/{{book.id}}">{{ book.name }}</a></h5>
                 <p class="card-text">Posted by: {{ book.username }}</p>
             </div>
-
         </div>
         {% endfor %}
-
     </div>
-
 </div>
-
 {% endblock content %}

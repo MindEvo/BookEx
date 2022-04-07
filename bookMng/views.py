@@ -14,12 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request,
-                  "bookMng/index.html",
-                  {
-                      'item_list': MainMenu.objects.all()
-                  }
-                  )
+    return render(request, "bookMng/index.html", {'item_list': MainMenu.objects.all()})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -40,14 +35,8 @@ def postbook(request):
         form = BookForm()
         if 'submitted' in request.GET:
             submitted = True
-        return render(request,
-                      "bookMng/postbook.html",
-                      {
-                          'form': form,
-                          'item_list': MainMenu.objects.all(),
-                          'submitted': submitted,
-                      }
-                      )
+        return render(request, "bookMng/postbook.html",
+                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -56,26 +45,14 @@ def displaybooks(request):
     for b in books:
         b.pic_path = b.picture.url[14:]
 
-    return render(request,
-                  "bookMng/displaybooks.html",
-                  {
-                        'item_list': MainMenu.objects.all(),
-                        'books': books
-                  }
-                  )
+    return render(request, "bookMng/displaybooks.html", {'item_list': MainMenu.objects.all(), 'books': books})
 
 
 @login_required(login_url=reverse_lazy('login'))
 def searchresults(request):
     books = Book.objects.filter(name__icontains=request.POST.get('search'))
 
-    return render(request,
-                  "bookMng/searchresults.html",
-                  {
-                      'item_list': MainMenu.objects.all(),
-                      'books': books
-                  }
-                  )
+    return render(request, "bookMng/searchresults.html", {'item_list': MainMenu.objects.all(), 'books': books})
 
 
 class Register(CreateView):
@@ -93,13 +70,7 @@ def book_detail(request, book_id):
     book = Book.objects.get(id=book_id)
     book.pic_path = book.picture.url[14:]
 
-    return render(request,
-                    "bookMng/book_detail.html",
-                    {
-                        'item_list': MainMenu.objects.all(),
-                        'book': book
-                    }
-                    )
+    return render(request, "bookMng/book_detail.html", {'item_list': MainMenu.objects.all(), 'book': book})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -107,13 +78,7 @@ def book_delete(request, book_id):
     book = Book.objects.get(id=book_id)
     book.delete()
 
-    return render(request,
-                    "bookMng/book_delete.html",
-                    {
-                        'item_list': MainMenu.objects.all(),
-                        'book': book
-                    }
-                    )
+    return render(request, "bookMng/book_delete.html", {'item_list': MainMenu.objects.all(), 'book': book})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -122,21 +87,8 @@ def mybooks(request):
     for b in books:
         b.pic_path = b.picture.url[14:]
 
-    return render(request,
-                    "bookMng/mybooks.html",
-                    {
-                        'item_list': MainMenu.objects.all(),
-                        'books': books
-                    }
-                    )
+    return render(request, "bookMng/mybooks.html", {'item_list': MainMenu.objects.all(), 'books': books})
 
 
 def aboutus(request):
-    return render(request,
-                  "bookMng/aboutus.html",
-                  {
-                      'item_list': MainMenu.objects.all()
-                  }
-                  )
-
-
+    return render(request, "bookMng/aboutus.html", {'item_list': MainMenu.objects.all()})

@@ -1,19 +1,6 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-
-{% block title %}
-Welcome
-{% endblock title%}
-
-{% block sidenav %}
-    {% for item in item_list %}
-        <li>
-            <a href="{{ item.link }}">{{ item.item }}</a>
-        </li>
-    {% endfor %}
-{% endblock sidenav %}
+{% block title %} Welcome {% endblock title%}
 
 {% block content %}
 <div class="container">
@@ -21,7 +8,6 @@ Welcome
         <img src="{% static 'logo.jpeg' %}" height="300" class="card-img-top" alt="...">
         <h1 class="card-title" align="center"> Welcome to the BookEx System </h1>
     </div>
-<br>
-<br>
+    <br><br>
 </div>
 {% endblock content %}

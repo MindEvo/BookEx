@@ -3,12 +3,19 @@
 {% load static %}
 
 {% block title %}
-Display Books
+My Books
 {% endblock title%}
 
+{% block sidenav %}
+    {% for item in item_list %}
+        <li>
+            <a href="{{ item.link }}">{{ item.item }}</a>
+        </li>
+    {% endfor %}
+{% endblock sidenav %}
 
 {% block content %}
-<h1 align="center"> Display Books </h1>
+<h1 align="center"> My Books </h1>
 
 <div class="container">
     <table class="table w-50 table-bordered" align="center" border="2" width="200">
@@ -17,6 +24,7 @@ Display Books
                 <th scope="col"></th>
                 <th scope="col">Title</th>
                 <th scope="col">Price</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +38,9 @@ Display Books
                     </td>
                     <td>
                         ${{ book.price }}
+                    </td>
+                    <td>
+                        <a href="book_delete/{{ book.id }}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

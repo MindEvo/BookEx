@@ -103,13 +103,27 @@ def book_detail(request, book_id):
 
 
 @login_required(login_url=reverse_lazy('login'))
+def book_delete(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+
+    return render(request,
+                    "bookMng/book_delete.html",
+                    {
+                        'item_list': MainMenu.objects.all(),
+                        'book': book
+                    }
+                    )
+
+
+@login_required(login_url=reverse_lazy('login'))
 def mybooks(request):
-    books = Book.objects.all()
+    books = Book.objects.filter(username=request.user)
     for b in books:
         b.pic_path = b.picture.url[14:]
 
     return render(request,
-                    "bookMng/displaybooks.html",
+                    "bookMng/mybooks.html",
                     {
                         'item_list': MainMenu.objects.all(),
                         'books': books
@@ -124,3 +138,5 @@ def aboutus(request):
                       'item_list': MainMenu.objects.all()
                   }
                   )
+
+

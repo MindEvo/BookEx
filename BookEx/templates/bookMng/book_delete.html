@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Book Deleted
+{% endblock title%}
+
+
+{% block content %}
+<h1 align="center"> Book Deleted </h1>
+
+<div class="row justify-content-center">
+
+    <div class="card" style="width: 22rem;">
+
+        <img src="{% static book.pic_path  %}" width="100%" height="100%"/>
+
+        <div class="card-body">
+            <h1 class="card-title" align="center">{{book.name}}</h1>
+        </div>
+
+    </div>
+
+    <div class="card" style="width: 16rem;">
+
+        <div class="card-body">
+
+            <p class="card-title" align="center"> ${{book.price}}</p>
+            <hr>
+            <p class="card-text" align="center">Posted By: {{book.username}}</p>
+            <hr>
+            <p class="card-text" align="center">Website: {{book.web}}</p>
+            <hr>
+            <p class="card-text" align="center">Published: {{book.publishdate}}</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

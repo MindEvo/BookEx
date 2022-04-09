@@ -23,3 +23,13 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Comment(models.Model):
+    book = models.ForeignKey(Book, related_name="comments", on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.book.name + " - " + self.name)

@@ -4,8 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import MainMenu
 from .forms import BookForm
+from .forms import CommentForm
 from django.http import HttpResponseRedirect
 from .models import Book
+from .models import Comment
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
@@ -92,3 +94,25 @@ def mybooks(request):
 
 def aboutus(request):
     return render(request, "bookMng/aboutus.html", {'item_list': MainMenu.objects.all()})
+
+
+@login_required(login_url=reverse_lazy('login'))
+def postcomment(request):
+    submitted = False
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            try:
+                comment.name = request.user
+            except Exception:
+                pass
+            comment.save()
+            return HttpResponseRedirect('/book_detail?submitted=True')
+    else:
+        form = CommentForm()
+        if 'submitted' in request.GET:
+            submitted = True
+        return render(request, "bookMng/book_detail.html",
+                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})

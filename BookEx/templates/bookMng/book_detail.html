@@ -23,4 +23,30 @@
         </div>
     </div>
 </div>
+
+<br><br><h2>Comments...</h2>
+{% if not book.comments.all %}
+<p>No comments posted.</p>
+{% else %}
+    {% for comment in book.comments.all %}
+        <div class="row justify-content-center border border-dark p-3" style="background-color: lightblue;">
+            <div class="col-3 border">
+            {{ comment.name }} <br> {{ comment.date_added }}
+            </div>
+            <div class="col border">
+            {{ comment.body }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+<br/><br/><br/>
+
+<div class="row">
+    <form class="form" action="" enctype="multipart/form-data" method="post" novalidate>
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+        {% csrf_token %}
+    </form>
+</div>
+
 {% endblock content %}

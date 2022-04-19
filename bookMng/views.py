@@ -106,10 +106,12 @@ def postcomment(request, book_id):
             comment = form.save(commit=False)
             try:
                 comment.name = request.user
+                comment.book = Book.objects.get(id=book_id)
             except Exception:
                 pass
+            print(comment.book, comment.name, comment.body, comment.date_added)
             comment.save()
-            return HttpResponseRedirect('./book_detail/<int:book_id>')
+            return HttpResponseRedirect('/book_detail/' + str(book_id))
     else:
         form = CommentForm()
         if 'submitted' in request.GET:

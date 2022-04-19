@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<br><br><h2>Comments...</h2>
+<br><br><h4>Comments</h4>
 {% if not book.comments.all %}
 <p>No comments posted.</p>
 {% else %}
@@ -40,11 +40,7 @@
     {% endfor %}
 {% endif %}
 <br/><br/>
-<h4>Add Comment</h4>
-<br/><br/>
 
-<button type="button" class="btn btn-primary">
-    <a href="/postcomment/{{ book.id }}">Add Comment</a>
-</button>
+<a class="btn btn-primary" href="/postcomment/{{ book.id }}">Add Comment</a>
 
 {% endblock content %}

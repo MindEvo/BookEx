@@ -97,7 +97,7 @@ def aboutus(request):
 
 
 @login_required(login_url=reverse_lazy('login'))
-def postcomment(request):
+def postcomment(request, book_id):
     submitted = False
 
     if request.method == 'POST':
@@ -109,10 +109,10 @@ def postcomment(request):
             except Exception:
                 pass
             comment.save()
-            return HttpResponseRedirect('/book_detail?submitted=True')
+            return HttpResponseRedirect('./book_detail/<int:book_id>')
     else:
         form = CommentForm()
         if 'submitted' in request.GET:
             submitted = True
-        return render(request, "bookMng/book_detail.html",
+        return render(request, "bookMng/postcomment.html",
                       {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})

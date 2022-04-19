@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Post Comment {% endblock title%}
+
+{% block content %}
+<h1 align="center"> Post Comment </h1>
+
+{% if submitted %}
+<p> Comment Posted </p>
+{% else %}
+<div class="row">
+
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
+        <p>
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </p>
+        {% csrf_token %}
+    </form>
+
+</div>
+{% endif %}
+
+{% endblock content %}

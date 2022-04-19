@@ -42,14 +42,9 @@
 <br/><br/>
 <h4>Add Comment</h4>
 <br/><br/>
-<div class="">
-    <form action="" method="post" novalidate>
-        {{ form }}
-        <p>
-            <input type="submit" value="Submit">
-        </p>
-        {% csrf_token %}
-    </form>
-</div>
+
+<button type="button" class="btn btn-primary">
+    <a href="/postcomment/{{ book.id }}">Add Comment</a>
+</button>
 
 {% endblock content %}

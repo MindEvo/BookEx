@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django.shortcuts import render
 # Create your views here.
 
@@ -11,6 +12,7 @@ from django.http import HttpResponseRedirect
 
 from .models import Book
 from .models import Comment
+from .models import Rating
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
@@ -73,9 +75,14 @@ class Register(CreateView):
 @login_required(login_url=reverse_lazy('login'))
 def book_detail(request, book_id):
     book = Book.objects.get(id=book_id)
+
+    ratings = Rating.objects.filter(book=Book.objects.get(id=book_id))
+    avg_rating = ratings.all().aggregate(Avg('rating'))
+
     book.pic_path = book.picture.url[14:]
 
-    return render(request, "bookMng/book_detail.html", {'item_list': MainMenu.objects.all(), 'book': book})
+    return render(request, "bookMng/book_detail.html",
+                  {'item_list': MainMenu.objects.all(), 'book': book, 'avg_rating': avg_rating})
 
 
 @login_required(login_url=reverse_lazy('login'))

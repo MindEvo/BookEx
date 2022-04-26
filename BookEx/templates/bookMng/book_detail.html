@@ -19,6 +19,12 @@
             <p class="card-text" align="center">Website: {{book.web}}</p>
             <hr>
             <p class="card-text" align="center">Posted On: {{book.publishdate}}</p>
+            <hr>
+            {% if not book.ratings.all %}
+            <p class="card-text" align="center"> No Ratings </p>
+            {% else %}
+            <p class="card-text" align="center"> Rating: {{ avg_rating }}/5</p>
+            {% endif %}
         </div>
     </div>
 </div>

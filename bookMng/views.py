@@ -58,6 +58,8 @@ def displaybooks(request):
 @login_required(login_url=reverse_lazy('login'))
 def searchresults(request):
     books = Book.objects.filter(name__icontains=request.POST.get('search'))
+    for b in books:
+        b.pic_path = b.picture.url[14:]
 
     return render(request, "bookMng/searchresults.html", {'item_list': MainMenu.objects.all(), 'books': books})
 
@@ -78,11 +80,12 @@ def book_detail(request, book_id):
 
     ratings = Rating.objects.filter(book=Book.objects.get(id=book_id))
     avg_rating = ratings.all().aggregate(Avg('rating'))
+    total = ratings.all().count()
 
     book.pic_path = book.picture.url[14:]
 
     return render(request, "bookMng/book_detail.html",
-                  {'item_list': MainMenu.objects.all(), 'book': book, 'avg_rating': avg_rating})
+                  {'item_list': MainMenu.objects.all(), 'book': book, 'avg_rating': avg_rating, 'total': total})
 
 
 @login_required(login_url=reverse_lazy('login'))

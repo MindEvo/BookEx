@@ -5,7 +5,10 @@ from django.http import HttpResponse
 from .models import MainMenu
 from .forms import BookForm
 from .forms import CommentForm
+from .forms import RatingForm
+
 from django.http import HttpResponseRedirect
+
 from .models import Book
 from .models import Comment
 
@@ -109,7 +112,6 @@ def postcomment(request, book_id):
                 comment.book = Book.objects.get(id=book_id)
             except Exception:
                 pass
-            print(comment.book, comment.name, comment.body, comment.date_added)
             comment.save()
             return HttpResponseRedirect('/book_detail/' + str(book_id))
     else:
@@ -118,3 +120,27 @@ def postcomment(request, book_id):
             submitted = True
         return render(request, "bookMng/postcomment.html",
                       {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})
+
+
+@login_required(login_url=reverse_lazy('login'))
+def postrating(request, book_id):
+    submitted = False
+
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            try:
+                rating.name = request.user
+                rating.book = Book.objects.get(id=book_id)
+            except Exception:
+                pass
+            rating.save()
+            return HttpResponseRedirect('/book_detail/' + str(book_id))
+    else:
+        form = RatingForm()
+        if 'submitted' in request.GET:
+            submitted = True
+        return render(request, "bookMng/postrating.html",
+                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})
+

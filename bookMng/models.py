@@ -33,3 +33,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.book.name + " - " + self.name)
+
+
+class Rating(models.Model):
+    book = models.ForeignKey(Book, related_name="ratings", on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    rating = models.IntegerField()
+
+    def __str__(self):
+        return str(self.book.name + " - " + self.name)

@@ -5,56 +5,62 @@
 {% block content %}
 
 <div class="row justify-content-center">
-    <div class="card" style="width: 20rem; background-color: lightgrey; margin-right: 15px; margin-top: 15px;">
+    <div class="card" style="width: 24rem; margin-right: 15px; margin-top: 15px; border: none;">
         <img src="{% static book.pic_path  %}" width="100%" height="100%"/>
     </div>
-    <div class="card" style="width: 16rem; background-color: lightgrey; margin-right: 15px; margin-top: 15px;">
+    <div class="card" style="width: 24rem; margin-right: 15px; margin-top: 15px;">
         <div class="card-body">
             <h1 class="card-title" align="center">{{book.name}}</h1>
+            {% if book.name|length < 12 %} <br> {% endif %}
             <hr>
             <p class="card-title" align="center"> ${{book.price}}</p>
             <hr>
-            <p class="card-text" align="center">Posted By: {{book.username}}</p>
-            <hr>
-            <p class="card-text" align="center">Website: {{book.web}}</p>
-            <hr>
-            <p class="card-text" align="center">Posted On: {{book.publishdate}}</p>
-            <hr>
             {% if not book.ratings.all %}
-                <p class="card-text" align="center"> No Ratings </p>
+                <p class="card-text" align="center"> No Ratings &nbsp;&nbsp;&nbsp;
+                    <a href="/postrating/{{ book.id }}" class="btn btn-secondary"> Rate this Book</a>
+                </p>
             {% else %}
                 {% for key, value in avg_rating.items %}
-                    <p class="card-text" align="center">
-                        {{ value|floatformat:1 }}/5 ---
-                        <a href="/postrating/{{ book.id }}" style="text-decoration: none;">
-                            {{ total }} Ratings
-                        </a>
+                    <p class="card-text" align="center"> {{ value|floatformat:1 }}/5 &nbsp;&nbsp;&nbsp;
+                        <a href="/postrating/{{ book.id }}" class="btn btn-secondary">{{ total }} Ratings</a>
                     </p>
                 {% endfor %}
             {% endif %}
+            <hr>
+            <p class="card-text" align="center"> <a href="{{book.web}}" style="text-decoration: none;">{{book.web}}</a></p>
+            <hr>
+            <p class="card-text" align="center">Posted By: {{book.username}}</p>
+            <hr>
+            <p class="card-text" align="center">Posted On: {{book.publishdate}}</p>
+            <hr>
+            <p class="card-text" align="center">
+                <a href="" class="btn btn-primary">Add to Shopping Cart</a>
+            </p>
         </div>
     </div>
 </div>
 
-<br><br><h4> Comments</h4>
+<br><br>
+<h4>Comments</h4>
 {% if not book.comments.all %}
 <p>No comments posted.</p>
 {% else %}
     {% for comment in book.comments.all %}
         <div class="row justify-content-center border border-dark p-3" style="margin-left:10px; margin-right: 10px; background-color: white;">
-            <div class="col-1 border border-dark" style="background-color: lightgrey;">
-            {{ comment.name }}
+            <div class="col-1 border border-dark" style="background-color: lightgrey;" align="center">
+                {{ comment.name }} <br>
+                <img src="{% static 'profile.jpg' %}" width="85" height="55"/>
             </div>
             <div class="col ">
-            {{ comment.body }} <br><br>
+                {{ comment.body }}
+                <br><br>
                 <p align="right">{{ comment.date_added }}</p>
             </div>
         </div>
     {% endfor %}
 {% endif %}
-<br/><br/>
-
-<a class="btn btn-primary" href="/postcomment/{{ book.id }}">Add Comment</a>
-
-
+<br/>
+<div class="row justify-content-center">
+    <a class="btn btn-primary" href="/postcomment/{{ book.id }}" style="width: 12rem">Add Comment</a>
+</div>
 {% endblock content %}

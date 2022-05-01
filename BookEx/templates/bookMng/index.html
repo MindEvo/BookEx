@@ -3,11 +3,17 @@
 {% block title %} Welcome {% endblock title%}
 
 {% block content %}
-<div class="container">
-    <div class="card">
-        <img src="{% static 'logo.jpeg' %}" height="300" class="card-img-top" alt="...">
-        <h1 class="card-title" align="center"> Welcome to the BookEx System </h1>
+<br>
+<div class="row justify-content-center">
+    <div class="card" style="width: 20rem; border: none;">
+        <img src="{% static 'palms.jpg' %}" height="300" class="card-img-top" alt="...">
     </div>
-    <br><br>
+    <div class="card" style="width: 30rem;">
+        <img src="{% static 'logo.jpeg' %}" height="300" class="card-img-top" alt="...">
+        <br><h1 class="card-title" align="center"> Welcome to the Book Exchange </h1><br>
+    </div>
+    <div class="card" style="width: 20rem; border: none;">
+        <img src="{% static 'palms.jpg' %}" height="300" class="card-img-top" alt="...">
+    </div>
 </div>
 {% endblock content %}

@@ -1,3 +1,5 @@
+import select
+
 from django import forms
 from django.forms import ModelForm
 from .models import Book
@@ -23,14 +25,17 @@ class CommentForm(ModelForm):
             'body'
         ]
         labels = {
-            'body' : ''
+            'body': ''
         }
+
+
+CHOICES = {(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')}
+CHOICES = sorted(CHOICES)
 
 
 class RatingForm(ModelForm):
     class Meta:
         model = Rating
-        fields = [
-            'rating'
-        ]
-
+        fields = ['rating']
+        labels = {'rating': ''}
+        widgets = {'rating': forms.RadioSelect(choices=CHOICES)}

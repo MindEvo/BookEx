@@ -3,17 +3,27 @@
 {% block title %} My Books {% endblock title%}
 
 {% block content %}
+{% if books.count < 2 %}
+<br><h1 align="center"> You have {{books.count}} Book Posted </h1><br>
+{% else %}
 <br><h1 align="center"> You have {{books.count}} Books Posted </h1><br>
+{% endif %}
 
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
         {% for book in books %}
-        <div class="card" style="width: 16rem;" >
-            <img src="{% static book.pic_path %}" class="card-img-top"/>
+        <div class="card" style="width: 16rem; margin-right: 20px;" >
+            <img src="{% static book.pic_path %}" class="card-img-top" width="225" height="300"/><hr>
             <div class="card-body">
-                <h5 class="card-title"><a href="book_detail/{{book.id}}">{{ book.name }}</a></h5>
-                <p class="card-text">{{ book.publishdate }}</p>
-                <hr><a href="book_delete/{{ book.id }}">Delete</a>
+                <h5 class="card-title" align="center">
+                    <a href="book_detail/{{book.id}}" style="text-decoration: none;">{{ book.name }}</a>
+                </h5>
+                <hr>
+                <p class="card-text" align="center">Added: {{ book.publishdate }}</p>
+                <hr>
+                <p class="card-text" align="center">
+                    <a href="book_delete/{{ book.id }}">Delete</a>
+                </p>
             </div>
         </div>
         {% endfor %}

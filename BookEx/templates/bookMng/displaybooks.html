@@ -7,12 +7,15 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
         {% for book in books %}
-        <div class="card" style="width: 16rem;" >
-            <img src="{% static book.pic_path %}" class="card-img-top" width="225" height="300"/>
+        <div class="card" style="width: 16rem; margin-right: 20px;" >
+            <img src="{% static book.pic_path %}" class="card-img-top" width="225" height="300"/><hr>
             <div class="card-body">
-                <h5 class="card-title"><a href="book_detail/{{book.id}}">{{ book.name }}</a></h5>
-                <p class="card-text">{{ book.publishdate }}</p>
-
+                <h5 class="card-title" align="center">
+                    <a href="book_detail/{{book.id}}" style="text-decoration:none;">{{ book.name }}</a>
+                </h5>
+                {% if book.name|length < 22 %} <br> {% endif %}
+                <hr>
+                <p class="card-text" align="center">Added: {{ book.publishdate }}</p>
             </div>
         </div>
         {% endfor %}

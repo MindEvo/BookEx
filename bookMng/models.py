@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 from django.contrib.auth.models import User
 
@@ -38,7 +37,7 @@ class Comment(models.Model):
 class Rating(models.Model):
     book = models.ForeignKey(Book, related_name="ratings", on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    rating = models.IntegerField()
+    rating = models.PositiveIntegerField()
 
     def __str__(self):
         return str(self.book.name + " - " + self.name)

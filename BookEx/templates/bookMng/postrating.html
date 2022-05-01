@@ -8,17 +8,23 @@
     </div>
     <div class="card" style="width: 24rem; margin-right: 15px; margin-top: 15px;">
         <div class="card-body">
-            <h1 class="card-title" align="center">Rate this Book</h1>
+            <h1 class="card-title" align="center">Rate this Book</h1><hr><br><br><br>
             {% if submitted %}
             <p> Rating Added </p>
             {% else %}
-            <div class="text-center">
-                <form action="" method="post" enctype="multipart/form-data" novalidate>
-                    {{ form.as_p }}
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                    {% csrf_token %}
-                </form>
-            </div>
+                {% if not rated %}
+                <div class="text-center">
+                    <form action="" method="post" enctype="multipart/form-data" novalidate>
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                        {% csrf_token %}
+                    </form>
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <h1>You have already rated this book!</h1>
+                </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

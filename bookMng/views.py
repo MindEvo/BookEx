@@ -138,6 +138,13 @@ def postcomment(request, book_id):
 def postrating(request, book_id):
     book = Book.objects.get(id=book_id)
     book.pic_path = book.picture.url[14:]
+    allratings = Rating.objects.filter(book=Book.objects.get(id=book_id))
+
+    if not allratings.filter(name=request.user):
+        rated = False
+    else:
+        rated = True
+
     submitted = False
 
     if request.method == 'POST':
@@ -147,6 +154,7 @@ def postrating(request, book_id):
             try:
                 rating.name = request.user
                 rating.book = Book.objects.get(id=book_id)
+
             except Exception:
                 pass
             rating.save()
@@ -156,5 +164,6 @@ def postrating(request, book_id):
         if 'submitted' in request.GET:
             submitted = True
         return render(request, "bookMng/postrating.html",
-                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted, 'book': book})
+                      {'form': form, 'item_list': MainMenu.objects.all(),
+                       'submitted': submitted, 'book': book, 'rated': rated})
 

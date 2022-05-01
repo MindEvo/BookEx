@@ -136,6 +136,8 @@ def postcomment(request, book_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def postrating(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.pic_path = book.picture.url[14:]
     submitted = False
 
     if request.method == 'POST':
@@ -154,5 +156,5 @@ def postrating(request, book_id):
         if 'submitted' in request.GET:
             submitted = True
         return render(request, "bookMng/postrating.html",
-                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted})
+                      {'form': form, 'item_list': MainMenu.objects.all(), 'submitted': submitted, 'book': book})
 

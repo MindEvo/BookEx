@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Post Rating {% endblock title%}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="card" style="width: 24rem; margin-right: 15px; margin-top: 15px; border: none;">
+        <img src="{% static book.pic_path  %}" width="100%" height="100%"/>
+    </div>
+    <div class="card" style="width: 24rem; margin-right: 15px; margin-top: 15px;">
+        <div class="card-body">
+            <h1 class="card-title" align="center">Rate this Book</h1>
+            {% if submitted %}
+            <p> Rating Added </p>
+            {% else %}
+            <div class="text-center">
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                    {% csrf_token %}
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<h4>Ratings</h4>
+{% if not book.ratings.all %}
+<p>Be the first to rate this book!</p>
+{% else %}
+    {% for rating in book.ratings.all %}
+        <div class="row justify-content-center border border-dark p-3" style="margin-left:10px; margin-right: 10px; background-color: white;">
+            <div class="col-1 border border-dark" style="background-color: lightgrey;" align="center">
+                {{ rating.name }} <br>
+                <img src="{% static 'profile.jpg' %}" width="85" height="55"/>
+            </div>
+            <div class="col" align="center">
+                <h1 class="">
+                {{ rating.rating }}/5
+                </h1>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock content %}

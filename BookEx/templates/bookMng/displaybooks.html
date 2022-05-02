@@ -15,7 +15,7 @@
                 </h5>
                 {% if book.name|length < 22 %} <br> {% endif %}
                 <hr>
-                <p class="card-text" align="center">Added: {{ book.publishdate }}</p>
+                <p class="card-text" align="center">Cost: ${{ book.price }}</p>
             </div>
         </div>
         {% endfor %}

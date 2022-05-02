@@ -52,7 +52,10 @@ def displaybooks(request):
     for b in books:
         b.pic_path = b.picture.url[14:]
 
-    return render(request, "bookMng/displaybooks.html", {'item_list': MainMenu.objects.all(), 'books': books})
+    ratings = Rating.objects.all()
+
+    return render(request, "bookMng/displaybooks.html",
+                  {'item_list': MainMenu.objects.all(), 'books': books, 'ratings': ratings})
 
 
 @login_required(login_url=reverse_lazy('login'))

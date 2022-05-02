@@ -41,3 +41,17 @@ class Rating(models.Model):
 
     def __str__(self):
         return str(self.book.name + " - " + self.name)
+
+
+class ShoppingCart(models.Model):
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    books = []
+
+    def add(self, book):
+        self.books.insert(book)
+
+    def remove(self, book):
+        for b in self.books:
+            if b.id == book.id:
+                self.books.remove(b)
+

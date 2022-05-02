@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect
 from .models import Book
 from .models import Comment
 from .models import Rating
+from .models import ShoppingCart
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
@@ -170,3 +171,12 @@ def postrating(request, book_id):
                       {'form': form, 'item_list': MainMenu.objects.all(),
                        'submitted': submitted, 'book': book, 'rated': rated})
 
+
+@login_required(login_url=reverse_lazy('login'))
+def shoppingcart(request):
+    cart = ShoppingCart.objects.get(id=request.user)
+    books = cart.books
+    for book in books:
+        book.pic_path = book.picture.url[14:]
+
+    return render(request, "bookMng/shopping.html", {'item_list': MainMenu.objects.all(), 'books': books})

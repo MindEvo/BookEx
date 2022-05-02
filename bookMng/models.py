@@ -43,15 +43,10 @@ class Rating(models.Model):
         return str(self.book.name + " - " + self.name)
 
 
-class ShoppingCart(models.Model):
-    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    books = []
-
-    def add(self, book):
-        self.books.insert(book)
-
-    def remove(self, book):
-        for b in self.books:
-            if b.id == book.id:
-                self.books.remove(b)
-
+# class ShoppingCart(models.Model):
+#     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+#     items = models.ManyToManyField(Book)
+#     date_created = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return str(self.username + " - " + self.date_created)

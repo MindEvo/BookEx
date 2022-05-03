@@ -191,26 +191,27 @@ def postrating(request, book_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def shoppingcart(request):
-    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     if cart.books.exists():
+        cartempty = False
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
-            print(book.pic_path)
         total = sum([book.price for book in cart.books.all()])
+    else:
+        total = 0
+        cartempty = True
 
-    count = 1
+    username = request.user
     return render(request, "bookMng/shoppingcart.html",
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
+                   'cartempty': cartempty,
                    'total': total,
-                   'count': count,
                    'username': username})
 
 
 @login_required(login_url=reverse_lazy('login'))
 def addtocart(request, book_id):
-    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     cart.books.add(Book.objects.get(id=book_id))
     cart.save()
@@ -219,31 +220,36 @@ def addtocart(request, book_id):
         book.pic_path = book.picture.url[14:]
 
     total = sum([book.price for book in cart.books.all()])
+    cartempty = False
 
-    count = 1
+    username = request.user
     return render(request, "bookMng/shoppingcart.html",
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
+                   'cartempty': cartempty,
                    'total': total,
-                   'count': count,
                    'username': username})
 
 
 @login_required(login_url=reverse_lazy('login'))
 def removefromcart(request, book_id):
-    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     cart.books.remove(Book.objects.get(id=book_id))
     cart.save()
+
     if cart.books.exists():
+        cartempty = False
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
         total = sum([book.price for book in cart.books.all()])
+    else:
+        total = 0
+        cartempty = True
 
-    count = 1
+    username = request.user
     return render(request, "bookMng/shoppingcart.html",
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
+                   'cartempty': cartempty,
                    'total': total,
-                   'count': count,
                    'username': username})

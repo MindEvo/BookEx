@@ -2,6 +2,9 @@
 {% load static %}
 {% block title %} Shopping Cart {% endblock title%}
 {% block content %}
+{% if cartempty %}
+<br><br><h1 align="center">{{ username }}'s Cart is Empty</h1><br><br>
+{% else %}
 <h1 align="center">{{ username }}'s Cart</h1>
 <table class="table" style="width: 36rem;" align="center">
     <thead>
@@ -31,5 +34,5 @@
         </tr>
     </tbody>
 </table>
-
+{% endif %}
 {% endblock content %}

@@ -196,8 +196,12 @@ def shoppingcart(request):
         cartempty = False
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
-        total = sum([book.price for book in cart.books.all()])
+        subtotal = sum([book.price for book in cart.books.all()])
+        tax = float(subtotal) * 0.095
+        total = float(subtotal) + tax
     else:
+        subtotal = 0
+        tax = 0
         total = 0
         cartempty = True
 
@@ -206,6 +210,8 @@ def shoppingcart(request):
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
                    'cartempty': cartempty,
+                   'subtotal': subtotal,
+                   'tax': tax,
                    'total': total,
                    'username': username})
 
@@ -219,7 +225,9 @@ def addtocart(request, book_id):
     for book in cart.books.all():
         book.pic_path = book.picture.url[14:]
 
-    total = sum([book.price for book in cart.books.all()])
+    subtotal = sum([book.price for book in cart.books.all()])
+    tax = float(subtotal) * 0.095
+    total = float(subtotal) + tax
     cartempty = False
 
     username = request.user
@@ -227,6 +235,8 @@ def addtocart(request, book_id):
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
                    'cartempty': cartempty,
+                   'subtotal': subtotal,
+                   'tax': tax,
                    'total': total,
                    'username': username})
 
@@ -241,8 +251,12 @@ def removefromcart(request, book_id):
         cartempty = False
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
-        total = sum([book.price for book in cart.books.all()])
+        subtotal = sum([book.price for book in cart.books.all()])
+        tax = float(subtotal) * 0.095
+        total = float(subtotal) + tax
     else:
+        subtotal = 0
+        tax = 0
         total = 0
         cartempty = True
 
@@ -251,5 +265,7 @@ def removefromcart(request, book_id):
                   {'item_list': MainMenu.objects.all(),
                    'books': cart.books.all(),
                    'cartempty': cartempty,
+                   'subtotal': subtotal,
+                   'tax': tax,
                    'total': total,
                    'username': username})

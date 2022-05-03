@@ -9,6 +9,7 @@
 <table class="table" style="width: 36rem;" align="center">
     <thead>
         <tr>
+            <th scope="col"></th>
             <th scope="col">Item#</th>
             <th scope="col">Photo</th>
             <th scope="col">Name</th>
@@ -19,7 +20,8 @@
     <tbody>
     {% for book in books %}
         <tr>
-            <th scope="row">{{ forloop.counter }}</th>
+            <td></td>
+            <td scope="row">{{ forloop.counter }}</td>
             <td><img src="{% static book.pic_path %}"/></td>
             <td>{{ book.name }}</td>
             <td>{{ book.price }}</td>
@@ -27,10 +29,28 @@
         </tr>
     {% endfor %}
         <tr>
+            <td scope="row">Subtotal</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ subtotal }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td scope="row">Taxes</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ tax|floatformat:2 }}</td>
+            <td></td>
+        </tr>
+        <tr>
             <th scope="row">Total</th>
             <td></td>
             <td></td>
-            <td>{{ total }}</td>
+            <td></td>
+            <th>{{ total|floatformat:2 }}</th>
+            <td></td>
         </tr>
     </tbody>
 </table>

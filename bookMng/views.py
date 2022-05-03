@@ -226,6 +226,7 @@ def addtocart(request, book_id):
 
     for book in cart.books.all():
         book.pic_path = book.picture.url[14:]
+        book.save()
 
     subtotal = sum([book.price for book in cart.books.all()])
     tax = float(subtotal) * 0.095
@@ -253,6 +254,7 @@ def removefromcart(request, book_id):
         cartempty = False
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
+            book.save()
         subtotal = sum([book.price for book in cart.books.all()])
         tax = float(subtotal) * 0.095
         total = float(subtotal) + tax

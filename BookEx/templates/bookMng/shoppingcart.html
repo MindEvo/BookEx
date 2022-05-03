@@ -2,25 +2,26 @@
 {% load static %}
 {% block title %} Shopping Cart {% endblock title%}
 {% block content %}
-
-<table class="table" style="width: 24rem;" align="center">
+<h1 align="center">{{ username }}'s Cart</h1>
+<table class="table" style="width: 36rem;" align="center">
     <thead>
         <tr>
-            <th scope="col">Item</th>
+            <th scope="col">Item#</th>
             <th scope="col">Photo</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
     {% for book in books %}
         <tr>
-            <th scope="row">{{ count }}</th>
+            <th scope="row">{{ forloop.counter }}</th>
             <td><img src="{% static book.pic_path %}"/></td>
             <td>{{ book.name }}</td>
             <td>{{ book.price }}</td>
+            <td><a href="/removefromcart/{{ book.id }}">Remove Item</a></td>
         </tr>
-        {{ count|add:1 }}
     {% endfor %}
         <tr>
             <th scope="row">Total</th>

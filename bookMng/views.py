@@ -191,19 +191,26 @@ def postrating(request, book_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def shoppingcart(request):
+    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     if cart.books.exists():
         for book in cart.books.all():
             book.pic_path = book.picture.url[14:]
+            print(book.pic_path)
         total = sum([book.price for book in cart.books.all()])
 
     count = 1
     return render(request, "bookMng/shoppingcart.html",
-                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})
+                  {'item_list': MainMenu.objects.all(),
+                   'books': cart.books.all(),
+                   'total': total,
+                   'count': count,
+                   'username': username})
 
 
 @login_required(login_url=reverse_lazy('login'))
 def addtocart(request, book_id):
+    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     cart.books.add(Book.objects.get(id=book_id))
     cart.save()
@@ -215,11 +222,16 @@ def addtocart(request, book_id):
 
     count = 1
     return render(request, "bookMng/shoppingcart.html",
-                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})
+                  {'item_list': MainMenu.objects.all(),
+                   'books': cart.books.all(),
+                   'total': total,
+                   'count': count,
+                   'username': username})
 
 
 @login_required(login_url=reverse_lazy('login'))
 def removefromcart(request, book_id):
+    username = request.user
     cart = ShoppingCart.objects.get(username=request.user)
     cart.books.remove(Book.objects.get(id=book_id))
     cart.save()
@@ -230,4 +242,8 @@ def removefromcart(request, book_id):
 
     count = 1
     return render(request, "bookMng/shoppingcart.html",
-                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})
+                  {'item_list': MainMenu.objects.all(),
+                   'books': cart.books.all(),
+                   'total': total,
+                   'count': count,
+                   'username': username})

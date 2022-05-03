@@ -22,7 +22,9 @@
         <tr>
             <td></td>
             <td scope="row">{{ forloop.counter }}</td>
-            <td><img src="{% static book.pic_path %}"/></td>
+            <td>
+                <img src="{% static book.pic_path %}"/>
+            </td>
             <td>{{ book.name }}</td>
             <td>{{ book.price }}</td>
             <td><a href="/removefromcart/{{ book.id }}">Remove Item</a></td>

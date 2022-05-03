@@ -33,7 +33,11 @@
             <p class="card-text" align="center">Posted On: {{book.publishdate}}</p>
             <hr>
             <p class="card-text" align="center">
-                <a href="" class="btn btn-primary">Add to Shopping Cart</a>
+                {% if not incart %}
+                <a href="/addtocart/{{ book.id }}" class="btn btn-primary">Add to Shopping Cart</a>
+                {% else %}
+                <a href="" class="btn btn-primary">In Cart</a>
+                {% endif %}
             </p>
         </div>
     </div>

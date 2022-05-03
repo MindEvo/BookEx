@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Shopping Cart {% endblock title%}
+{% block content %}
+
+<table class="table" style="width: 24rem;" align="center">
+    <thead>
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <th scope="row">{{ count }}</th>
+            <td><img src="{% static book.pic_path %}"/></td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.price }}</td>
+        </tr>
+        {{ count|add:1 }}
+    {% endfor %}
+        <tr>
+            <th scope="row">Total</th>
+            <td></td>
+            <td></td>
+            <td>{{ total }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock content %}

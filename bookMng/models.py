@@ -43,10 +43,11 @@ class Rating(models.Model):
         return str(self.book.name + " - " + self.name)
 
 
-# class ShoppingCart(models.Model):
-#     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-#     items = models.ManyToManyField(Book)
-#     date_created = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return str(self.username + " - " + self.date_created)
+class ShoppingCart(models.Model):
+    username = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    books = models.ManyToManyField(Book, blank=True)
+    total = models.PositiveIntegerField(blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.username) + " - cart_id:" + str(self.id)

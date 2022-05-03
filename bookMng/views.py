@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from .models import Book
 from .models import Comment
 from .models import Rating
-# from .models import ShoppingCart
+from .models import ShoppingCart
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
@@ -50,6 +50,7 @@ def postbook(request):
 @login_required(login_url=reverse_lazy('login'))
 def displaybooks(request):
     books = Book.objects.all().order_by('name')
+    print(sum([book.price for book in books]))
     for b in books:
         b.pic_path = b.picture.url[14:]
 
@@ -65,7 +66,8 @@ def searchresults(request):
     for b in books:
         b.pic_path = b.picture.url[14:]
 
-    return render(request, "bookMng/searchresults.html", {'item_list': MainMenu.objects.all(), 'books': books})
+    return render(request, "bookMng/searchresults.html",
+                  {'item_list': MainMenu.objects.all(), 'books': books})
 
 
 class Register(CreateView):
@@ -82,6 +84,11 @@ class Register(CreateView):
 def book_detail(request, book_id):
     book = Book.objects.get(id=book_id)
 
+    cart = ShoppingCart.objects.get(username=request.user)
+    incart = False
+    if book in cart.books.all():
+        incart = True
+
     ratings = Rating.objects.filter(book=Book.objects.get(id=book_id))
     avg_rating = ratings.all().aggregate(Avg('rating'))
     total = ratings.all().count()
@@ -89,7 +96,11 @@ def book_detail(request, book_id):
     book.pic_path = book.picture.url[14:]
 
     return render(request, "bookMng/book_detail.html",
-                  {'item_list': MainMenu.objects.all(), 'book': book, 'avg_rating': avg_rating, 'total': total})
+                  {'item_list': MainMenu.objects.all(),
+                   'book': book,
+                   'avg_rating': avg_rating,
+                   'total': total,
+                   'incart': incart})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -97,7 +108,8 @@ def book_delete(request, book_id):
     book = Book.objects.get(id=book_id)
     book.delete()
 
-    return render(request, "bookMng/book_delete.html", {'item_list': MainMenu.objects.all(), 'book': book})
+    return render(request, "bookMng/book_delete.html",
+                  {'item_list': MainMenu.objects.all(), 'book': book})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -106,11 +118,13 @@ def mybooks(request):
     for b in books:
         b.pic_path = b.picture.url[14:]
 
-    return render(request, "bookMng/mybooks.html", {'item_list': MainMenu.objects.all(), 'books': books})
+    return render(request, "bookMng/mybooks.html",
+                  {'item_list': MainMenu.objects.all(), 'books': books})
 
 
 def aboutus(request):
-    return render(request, "bookMng/aboutus.html", {'item_list': MainMenu.objects.all()})
+    return render(request, "bookMng/aboutus.html",
+                  {'item_list': MainMenu.objects.all()})
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -168,15 +182,52 @@ def postrating(request, book_id):
         if 'submitted' in request.GET:
             submitted = True
         return render(request, "bookMng/postrating.html",
-                      {'form': form, 'item_list': MainMenu.objects.all(),
-                       'submitted': submitted, 'book': book, 'rated': rated})
+                      {'form': form,
+                       'item_list': MainMenu.objects.all(),
+                       'submitted': submitted,
+                       'book': book,
+                       'rated': rated})
 
 
-# @login_required(login_url=reverse_lazy('login'))
-# def shoppingcart(request):
-#     cart = ShoppingCart.objects.get(id=request.user)
-#     books = cart.books
-#     for book in books:
-#         book.pic_path = book.picture.url[14:]
-#
-#     return render(request, "bookMng/shopping.html", {'item_list': MainMenu.objects.all(), 'books': books})
+@login_required(login_url=reverse_lazy('login'))
+def shoppingcart(request):
+    cart = ShoppingCart.objects.get(username=request.user)
+    if cart.books.exists():
+        for book in cart.books.all():
+            book.pic_path = book.picture.url[14:]
+        total = sum([book.price for book in cart.books.all()])
+
+    count = 1
+    return render(request, "bookMng/shoppingcart.html",
+                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})
+
+
+@login_required(login_url=reverse_lazy('login'))
+def addtocart(request, book_id):
+    cart = ShoppingCart.objects.get(username=request.user)
+    cart.books.add(Book.objects.get(id=book_id))
+    cart.save()
+
+    for book in cart.books.all():
+        book.pic_path = book.picture.url[14:]
+
+    total = sum([book.price for book in cart.books.all()])
+
+    count = 1
+    return render(request, "bookMng/shoppingcart.html",
+                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})
+
+
+@login_required(login_url=reverse_lazy('login'))
+def removefromcart(request, book_id):
+    cart = ShoppingCart.objects.get(username=request.user)
+    cart.books.remove(Book.objects.get(id=book_id))
+    cart.save()
+    if cart.books.exists():
+        for book in cart.books.all():
+            book.pic_path = book.picture.url[14:]
+        total = sum([book.price for book in cart.books.all()])
+
+    count = 1
+    return render(request, "bookMng/shoppingcart.html",
+                  {'item_list': MainMenu.objects.all(), 'books': cart.books.all(), 'total': total, 'count': count})

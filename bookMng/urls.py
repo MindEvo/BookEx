@@ -12,5 +12,7 @@ urlpatterns = [
     path('searchresults', views.searchresults, name='searchresults'),
     path('postcomment/<int:book_id>', views.postcomment, name='postcomment'),
     path('postrating/<int:book_id>', views.postrating, name='postrating'),
-    # path('shoppingcart', views.shoppingcart, name='shoppingcart')
+    path('shoppingcart', views.shoppingcart, name='shoppingcart'),
+    path('addtocart/<int:book_id>', views.addtocart, name='addtocart'),
+    path('removefromcart/<int:book_id', views.removefromcart, name='removefromcart')
 ]
